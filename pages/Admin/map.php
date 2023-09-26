@@ -146,9 +146,11 @@ $nav = $rows['navtitles'];
 
 <style>
    #map {
-    height: 800px;
+    height: 500px;
     position: relative;
     z-index: 0;
+    margin-top:100px
+    transform: scale(1.3);
   }
 
   #sidebar {
@@ -156,7 +158,7 @@ $nav = $rows['navtitles'];
   top: 0;
   right: 0;
   width: 300px; /* Adjust the width as needed */
-  height: 600px; /* Set the height to 100% to fill the entire screen height */
+  height: 100%; /* Set the height to 100% to fill the entire screen height */
   background-color: #f1f1f1;
   padding: 20px;
   display: none;
@@ -172,8 +174,8 @@ $nav = $rows['navtitles'];
   }
   #legend {
     position: absolute;
-    bottom: 230px;
-    left: 860px;
+    bottom: 100px;
+    left: 810px;
     background-color: white;
     padding: 10px;
     z-index: 9999;

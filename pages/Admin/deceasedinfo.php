@@ -1679,21 +1679,9 @@ $(document).ready(function () {
 
 
 
-  <script>
-// $(document).ready(function() {
-//   $('#dataTable thead tr').clone(true).appendTo('#dataTable thead');
-//   $('#dataTable thead tr:eq(1) th').each(function(i) {
-//     var title = $(this).text();
-//     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-//     $('input', this).on('keyup change', function() {
-//       if (table.column(i).search() !== this.value) {
-//         table
-//           .column(i)
-//           .search(this.value)
-//           .draw();
-//       }
-//     });
-//   });
+ <script>
+  $(document).ready(function() {
+  $('#dataTable thead tr').clone(true).appendTo('#dataTable thead');
 
   var table = $('#dataTable').DataTable({
     destroy: true,
@@ -1702,13 +1690,13 @@ $(document).ready(function () {
     dom: 'Bfrtip',
     stateSave: true,
     language: {
-      emptyTable: 'No data available in table',
+      emptyTable: 'No data available in the table',
       zeroRecords: 'No matching records found - showing all records',
     },
     buttons: [
       {
         extend: 'print',
-        title: ' Butag Cemetery',
+        title: 'Butag Cemetery',
         messageTop: 'List of Deceased',
         messageBottom:
           'Prepared by: <?php date_default_timezone_set("Asia/Hong_Kong"); echo $a["firstname"] ." ". $a["lastname"] ." ". date("l, F j Y h:i:s A"); ?>',
@@ -1752,7 +1740,7 @@ $(document).ready(function () {
           },
         },
       },
-      'colvis',
+      'colvis', // Column visibility
     ],
     columns: [
       null, // You should specify the number of columns you have here
@@ -1772,9 +1760,7 @@ $(document).ready(function () {
   });
 });
 
-
-
-  </script>
+ </script>
 
 
 
