@@ -133,21 +133,21 @@ while($row = mysqli_fetch_assoc($result))
     margin-top: -10px;
     margin-left: 10px;
     z-index: 0;
-    transform: scale(1.5);
+    transform: scale(1.2);
   }
 
+  #sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px; /* Adjust the width as needed */
+  height: 540px; /* Set the height to 100% to fill the entire screen height */
+  background-color: #f1f1f1;
+  padding: 20px;
+  display: none;
+  z-index: 99999;
+}
 
-    #sidebar {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 500px;
-      height: 800px;
-      background-color: #f1f1f1;
-      padding: 20px;
-      display: none;
-      z-index: 99999;
-    }
 
     #sidebar-title {
       margin-top: 0;

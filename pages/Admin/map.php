@@ -152,16 +152,16 @@ $nav = $rows['navtitles'];
   }
 
   #sidebar {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 500px;
-    height: 100%;
-    background-color: #f1f1f1;
-    padding: 20px;
-    display: none;
-    z-index: 9999;
-  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px; /* Adjust the width as needed */
+  height: 600px; /* Set the height to 100% to fill the entire screen height */
+  background-color: #f1f1f1;
+  padding: 20px;
+  display: none;
+  z-index: 99999;
+}
 
   #sidebar-title {
     margin-top: 0;
@@ -172,8 +172,8 @@ $nav = $rows['navtitles'];
   }
   #legend {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 230px;
+    left: 860px;
     background-color: white;
     padding: 10px;
     z-index: 9999;
@@ -239,6 +239,30 @@ $nav = $rows['navtitles'];
 }
 
 
+        /* Responsive styles for the sidebar */
+        @media screen and (max-width: 1280px) {
+            #sidebar {
+                display: none; /* Hide the sidebar on screens <= 1280px wide */
+            }
+        }
+
+        /* Adjust content margin when sidebar is hidden */
+        @media screen and (max-width: 1280px) {
+            #content {
+                margin-left:220px; /* Remove the margin when the sidebar is hidden */
+            }
+        }
+
+        /* Responsive styles for the sidebar */
+        @media screen and (max-width: 768px) {
+            #accordionSidebar {
+                display: none; /* Hide the sidebar on screens <= 768px wide */
+            }
+
+            #content {
+                margin-left: 220px; /* Remove the margin when the sidebar is hidden */
+            }
+        }
 
 
 </style>
