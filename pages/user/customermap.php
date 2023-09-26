@@ -141,7 +141,7 @@ while($row = mysqli_fetch_assoc($result))
   top: 0;
   right: 0;
   width: 300px; /* Adjust the width as needed */
-  height: 540px; /* Set the height to 100% to fill the entire screen height */
+  height: 100%aa; /* Set the height to 100% to fill the entire screen height */
   background-color: #f1f1f1;
   padding: 20px;
   display: none;
@@ -400,11 +400,11 @@ while($row = mysqli_fetch_assoc($result))
 
 <section class="section" id="map_area">
 <div class="container-fluid">
-<div class="map-container">
+<div class="map-container">8
 <div id="map" class="map-overlay">
       <div id="legend"></div>
   </div>
-  <div id="sidebar" class="bg-light">
+  <div id="sidebar" class="bg-light" style="margin-top: -80px;">
     <h2 id="sidebar-title"></h2>
     <img id="sidebar-image" src="" alt="Marker Image" class="img-fluid marker-image">
     <br><br>
@@ -418,7 +418,7 @@ while($row = mysqli_fetch_assoc($result))
           <input type="hidden" name="grave" id="graveId" value="">
       </form>
       
-      <button id="getDirectionsBtn" class="btn btn-primary">Get Directions</button>
+      <button id="getDirectionsBtn" class="btn btn-primary" style="height: 100%;">Get Directions</button>
   </div>
   <div id="sidebar-overlay" class="sidebar-overlay"></div>
 </div>
