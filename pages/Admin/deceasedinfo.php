@@ -1681,12 +1681,10 @@ $(document).ready(function () {
 
  <script>
   $(document).ready(function() {
-  $('#dataTable thead tr').clone(true).appendTo('#dataTable thead');
-
   var table = $('#dataTable').DataTable({
     destroy: true,
-    orderCellsTop: true,
-    fixedHeader: true,
+    orderCellsTop: true, // Keep the original table headers at the top
+    fixedHeader: true, // Enable fixed headers
     dom: 'Bfrtip',
     stateSave: true,
     language: {
