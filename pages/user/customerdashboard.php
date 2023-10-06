@@ -222,116 +222,8 @@ while($row = mysqli_fetch_assoc($result))
 
 
 
-   
-
-        <div class="header-text">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="left-text col-lg-6 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-
-                    <center>   <h4 style ="color: #223892;"><?php echo $header1;?></h4></center>
-
-                   
-
-                     <br>
-
-                     <p style=" color: #242F52; text-align:justify"><?php echo $description1;?></p>
-
-                       
-
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
-
-
-
-                    <?php include '../../db.php'; 
-
-
-
-$query="SELECT * from tblcontent";
-
-$result= mysqli_query($conn,$query);
-
-while($row = mysqli_fetch_assoc($result))
-
-{
-
-
-
-    ?>
-
-    <img class="rounded img-fluid d-block mx-auto" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['headerimage1']); ?>" />
-
-    <?php
-
-}
-
-?>
-  
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-    </div>
-
-
-       
-
-
-<div class="container mt-3">
-
-<?php include '../../db.php'; 
-
-
-
-$que="SELECT * from tblannouncement";
-
-$res= mysqli_query($conn,$que);
-
-while($data = mysqli_fetch_assoc($res))
-
-{
-
-  $title = $data['title'];
-
-    $message = $data['announcement'];
-
-    $postedby = $data['postedby'];
-
-    
-
-    echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
-
-    echo '<h4 class="alert-heading">' .$data['title']. '</h4>';
-
-    echo '<p>' .$data['announcement']. '</p>';
-
-    echo '<hr>';
-
-    echo '<p class="mb-0">' .$data['postedby']. '</p>';
-
-    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-
-    echo '<span aria-hidden="true">&times;</span>';
-
-    echo '</div>';
-
- }
-
- ?>
-
-
-<div class="container">
+    <div class="container mt-3" style="margin-bottom: -300px;!important">
+<div class="container" style="margin-top: -340px;!important">
   <div class="row">
     <div class="col-md-6">
       <h1>SEARCH</h1>
@@ -353,6 +245,7 @@ while($data = mysqli_fetch_assoc($res))
     </div>
   </div>
 </div>
+
 
 
 
@@ -452,13 +345,136 @@ while($data = mysqli_fetch_assoc($res))
 
     </table>
 
+   
+    <?php include '../../db.php'; 
+
+
+
+$que="SELECT * from tblannouncement WHERE id = 1";
+
+$res= mysqli_query($conn,$que);
+
+while($data = mysqli_fetch_assoc($res))
+
+{
+
+  $title = $data['title'];
+
+    $message = $data['announcement'];
+
+    $postedby = $data['postedby'];
+
+    echo '<div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 200px;!important" >';
+
+    echo '<h4 class="alert-heading">' .$data['title']. '</h4>';
+
+    echo '<p>' .$data['announcement']. '</p>';
+
+    echo '<hr>';
+
+    echo '<p class="mb-0">' .$data['postedby']. '</p>';
+
+    // echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+
+    // echo '<span aria-hidden="true">&times;</span>';
+
+    echo '</div>';
+
+ }
+
+ ?>
+
+<?php include '../../db.php'; 
+
+
+
+$que="SELECT * from tblannouncement WHERE id =2";
+
+$res= mysqli_query($conn,$que);
+
+while($data = mysqli_fetch_assoc($res))
+
+{
+
+  $title = $data['title'];
+
+    $message = $data['announcement'];
+
+    $postedby = $data['postedby'];
+
+    
+
+    echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+
+    echo '<h4 class="alert-heading">' .$data['title']. '</h4>';
+
+    echo '<p>' .$data['announcement']. '</p>';
+
+    echo '<hr>';
+
+    echo '<p class="mb-0">' .$data['postedby']. '</p>';
+
+    // echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+
+    // echo '<span aria-hidden="true">&times;</span>';
+
+    echo '</div>';
+
+ }
+
+ ?>
+  <?php include '../../db.php'; 
+
+
+
+$que="SELECT * from tblannouncement WHERE id =3";
+
+$res= mysqli_query($conn,$que);
+
+while($data = mysqli_fetch_assoc($res))
+
+{
+
+  $title = $data['title'];
+
+    $message = $data['announcement'];
+
+    $postedby = $data['postedby'];
+
+    
+
+    echo '<div class="alert alert-info alert-dismissible fade show" role="alert"';
+
+    echo '<h4 class="alert-heading">' .$data['title']. '</h4>';
+
+    echo '<p>' .$data['announcement']. '</p>';
+
+    echo '<hr>';
+
+    echo '<p class="mb-0">' .$data['postedby']. '</p>';
+
+    // echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+
+    // echo '<span aria-hidden="true">&times;</span>';
+
+    echo '</div>';
+
+ }
+
+ ?>
+
+
+
                 </div>
 
                
+          
 
-            </div>
+       
 
 
+
+          
 <br><br><br>
 
     

@@ -467,7 +467,7 @@ while($rows = mysqli_fetch_assoc($results))
 
 
 
-$que="SELECT * from tblannouncement";
+$que="SELECT * from tblannouncement WHERE id = 1";
 
 $res= mysqli_query($conn,$que);
 
@@ -491,7 +491,7 @@ while($data = mysqli_fetch_assoc($res))
 
                 <div class="card-header py-3">
 
-                  <h6 class="m-0 font-weight-bold text-primary">CREATE ANNOUNCEMENT</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">CREATE ANNOUNCEMENT #1</h6>
 
                 </div>
 
@@ -630,6 +630,346 @@ if ($conn->query($sql) === TRUE) {
 ?>
 
 
+<div class="container-fluid">
+
+            
+
+<?php include '../../db.php'; 
+
+
+
+$que="SELECT * from tblannouncement WHERE id = 2";
+$res= mysqli_query($conn,$que);
+
+while($data = mysqli_fetch_assoc($res))
+
+{
+
+$aid = $data['id'];
+
+$atitle = $data['title'];
+
+$amessage = $data['announcement'];
+
+$postedby = $data['postedby'];
+
+}
+
+?>
+
+    <div class="card shadow mb-4">
+
+  <div class="card-header py-3">
+
+    <h6 class="m-0 font-weight-bold text-primary">CREATE ANNOUNCEMENT #2</h6>
+
+  </div>
+
+  <div class="card-body">
+
+  <form action="" method="post" enctype="multipart/form-data">
+
+
+
+   <input type="hidden" name="aid" id="aid" value=<?php echo $aid; ?>>
+
+
+
+  <div class="form-group row">
+
+   <label for="atitle">Title</label>
+
+   <input type="text" id="atitle" class="form-control" name="atitle" placeholder="title" value="<?php echo $atitle; ?>">
+
+   </div>
+
+
+
+   <div class="form-group row">
+
+   <label for="amessage">Message</label>
+
+   <textarea class="form-control" style="resize: none;" rows="5" id="amessage" name="amessage" ><?php echo $amessage; ?></textarea>
+
+   </div>
+
+
+
+    <div class="form-group row">
+
+   <label for="postedby">Posted by</label>
+
+   <input type="text" id="postedby" class="form-control" name="postedby" value="<?php echo $postedby; ?>" >
+
+   </div>
+
+   
+
+
+
+
+
+   <input type="submit" name= "update" id="update" value="Post Announcement" class="form-control btn btn-block btn-primary">
+
+   
+
+
+
+   </form>
+
+    </div>
+
+    
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<?php
+
+
+
+require_once '../../db.php';
+
+
+
+
+
+if (isset($_POST['update'])) {
+
+$aid=$_POST['aid'];
+
+$atitle = $_POST['atitle'];
+
+$amessage = $_POST['amessage'];
+
+$postedby = $_POST['postedby'];
+
+
+
+
+
+$sql = "UPDATE tblannouncement SET 
+
+title='$atitle', 
+
+announcement='$amessage', 
+
+postedby='$postedby'
+
+WHERE id='$aid'";
+
+if ($conn->query($sql) === TRUE) {
+
+?>
+
+<script>
+
+swal("Success!", "Announcement posted successfully!","success").then( () => {
+
+location.href = 'announcement.php'
+
+})
+
+
+
+</script>
+
+
+
+<?php
+
+} else {
+
+echo "Error updating record: " . $conn->error;
+
+}
+
+}
+
+?>
+
+
+<div class="container-fluid">
+
+            
+
+<?php include '../../db.php'; 
+
+
+
+$que="SELECT * from tblannouncement WHERE id = 3";
+
+$res= mysqli_query($conn,$que);
+
+while($data = mysqli_fetch_assoc($res))
+
+{
+
+$aid = $data['id'];
+
+$atitle = $data['title'];
+
+$amessage = $data['announcement'];
+
+$postedby = $data['postedby'];
+
+}
+
+?>
+
+    <div class="card shadow mb-4">
+
+  <div class="card-header py-3">
+
+    <h6 class="m-0 font-weight-bold text-primary">CREATE ANNOUNCEMENT #3</h6>
+
+  </div>
+
+  <div class="card-body">
+
+  <form action="" method="post" enctype="multipart/form-data">
+
+
+
+   <input type="hidden" name="aid" id="aid" value=<?php echo $aid; ?>>
+
+
+
+  <div class="form-group row">
+
+   <label for="atitle">Title</label>
+
+   <input type="text" id="atitle" class="form-control" name="atitle" placeholder="title" value="<?php echo $atitle; ?>">
+
+   </div>
+
+
+
+   <div class="form-group row">
+
+   <label for="amessage">Message</label>
+
+   <textarea class="form-control" style="resize: none;" rows="5" id="amessage" name="amessage" ><?php echo $amessage; ?></textarea>
+
+   </div>
+
+
+
+    <div class="form-group row">
+
+   <label for="postedby">Posted by</label>
+
+   <input type="text" id="postedby" class="form-control" name="postedby" value="<?php echo $postedby; ?>" >
+
+   </div>
+
+   
+
+
+
+
+
+   <input type="submit" name= "update" id="update" value="Post Announcement" class="form-control btn btn-block btn-primary">
+
+   
+
+
+
+   </form>
+
+    </div>
+
+    
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<?php
+
+
+
+require_once '../../db.php';
+
+
+
+
+
+if (isset($_POST['update'])) {
+
+$aid=$_POST['aid'];
+
+$atitle = $_POST['atitle'];
+
+$amessage = $_POST['amessage'];
+
+$postedby = $_POST['postedby'];
+
+
+
+
+
+$sql = "UPDATE tblannouncement SET 
+
+title='$atitle', 
+
+announcement='$amessage', 
+
+postedby='$postedby'
+
+WHERE id='$aid'";
+
+if ($conn->query($sql) === TRUE) {
+
+?>
+
+<script>
+
+swal("Success!", "Announcement posted successfully!","success").then( () => {
+
+location.href = 'announcement.php'
+
+})
+
+
+
+</script>
+
+
+
+<?php
+
+} else {
+
+echo "Error updating record: " . $conn->error;
+
+}
+
+}
+
+?>
+
 
 
 
@@ -662,6 +1002,8 @@ while($row = mysqli_fetch_assoc($result))
     }
 
 ?>
+
+
 
       <!-- Footer -->
 
