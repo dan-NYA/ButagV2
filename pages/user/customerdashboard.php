@@ -169,24 +169,32 @@ while($row = mysqli_fetch_assoc($result))
 
 
                     <a class="logo" href="customerdashboard.php" style="font-size:15px; margin-left: 10px;"><?php echo $navtitle; ?></a>
-
-                    
-
-                       
-
-                        <ul class="nav">
-
               
 
-                        <li class="scroll-to-section"><a href="customerdashboard.php" class="active">Home</a></li>
-                       
-                        <li class="scroll-to-section"><a href="customermap.php#map_area">Map</a></li>
+                    <ul class="nav">
+                    <div class="col-md-8" style="margin-left: -160px; display: flex; justify-content: center; align-items: center;">
+      <div class="table-responsive">
+        
+        <div class="input-group">
+          <input id="search-name" class="form-control" type="search" placeholder="Enter relative's name..." name="search-name">
+          <div class="input-group-append">
+            <button class="btn btn-success btn-sm" id="filter-name">
+              <i class="fas fa-search" aria-hidden="true"></i> Search
+            </button>
+            <button onClick="window.location.reload();" class="btn btn-info btn-sm" id="refresh-name">
+              <i class="fa fa-refresh" aria-hidden="true"></i> Reset
+            </button>
+          </div>
+        </div><!-- /input-group -->
+      </div>
+    </div>
+  <li class="scroll-to-section"><a href="customerdashboard.php" class="active">Home</a></li>
+  <li class="scroll-to-section"><a href="customermap.php#map_area">Map</a></li>
+  <li class="scroll-to-section"><a href="customerprofile.php">Profile</a></li>
+  <li class="scroll-to-section"><a href="customerlogout.php">Logout</a></li>
+</ul>
 
-                        <li class="scroll-to-section"><a href="customerprofile.php">Profile</a></li>
 
-                            <li class="scroll-to-section"><a href="customerlogout.php">Logout</a></li>
-
-                        </ul>
 
                         <a class='menu-trigger'>
 
@@ -222,33 +230,22 @@ while($row = mysqli_fetch_assoc($result))
 
 
 
-    <div class="container mt-3" style="margin-bottom: -300px;!important">
+    <div class="container mt-3" style="margin-bottom: -500px;!important">
 <div class="container" style="margin-top: -340px;!important">
   <div class="row">
-    <div class="col-md-6">
-      <h1>SEARCH</h1>
-    </div>
-    <div class="col-md-6">
-      <div class="table-responsive">
-        <div class="input-group">
-          <input id="search-name" class="form-control" type="search" placeholder="Enter relative's name..." name="search-name">
-          <div class="input-group-append">
-            <button class="btn btn-success btn-sm" id="filter-name">
-              <i class="fas fa-search" aria-hidden="true"></i> Search
-            </button>
-            <button onClick="window.location.reload();" class="btn btn-info btn-sm" id="refresh-name">
-              <i class="fa fa-refresh" aria-hidden="true"></i> Reset
-            </button>
-          </div>
-        </div><!-- /input-group -->
-      </div>
-    </div>
+    
   </div>
 </div>
 
 
 
+<style>
+  .hidden-title {
+    display: none;
+  }
+</style>
 
+<h1 class="hidden-title" id="tableTitle">DECEASED PERSONS</h1>
 
                 <table class="table table-striped " id="dataTable" width="100%" cellspacing="0">
 
@@ -313,6 +310,7 @@ while($row = mysqli_fetch_assoc($result))
                                       ?>
 
                                       <tr>
+                                        
 
                       <td><?php echo  $date ?></td>
 
@@ -344,8 +342,13 @@ while($row = mysqli_fetch_assoc($result))
   
 
     </table>
+    <br><br><br>
+    <div style="text-align: center;">
+  <div style="display: inline-block; vertical-align: middle; width: 100%; border-top: 2px solid #333;"></div>
+  <h1 style="font-size: 100px; font-weight: bold; display: inline-block; margin: 0 10px; vertical-align: middle;">ANNOUNCEMENTS</h1>
+  <div style="display: inline-block; vertical-align: middle; width: 60%; border-top: 2px solid #333;"></div>
+</div>
 
-   
     <?php include '../../db.php'; 
 
 
@@ -364,7 +367,7 @@ while($data = mysqli_fetch_assoc($res))
 
     $postedby = $data['postedby'];
 
-    echo '<div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 200px;!important" >';
+    echo '<div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 60px;!important" >';
 
     echo '<h4 class="alert-heading">' .$data['title']. '</h4>';
 
@@ -516,6 +519,8 @@ console.log('Searching for name:', $('#search-name').val());
 table.column(1).search($('#search-name').val()).draw();
 
 $('#hide').css( 'display', 'block' );
+// Show the title when the button is pressed
+$('#tableTitle').removeClass('hidden-title');
 
 });
 
