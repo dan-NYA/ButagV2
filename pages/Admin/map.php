@@ -2047,8 +2047,8 @@ grave20.on('click', function () {
     });
 
 
-    // Graph representation (adjacency list)
-    var graph = {
+  // Graph representation (adjacency list)
+  var graph = {
       startMarker: {C: 1, E: 2, A:0},
    
       grave2: {C: 1},
@@ -2080,142 +2080,210 @@ grave20.on('click', function () {
       F:{grave9:1,grave1:1,grave13:1}
     };
 
-    // Dijkstra's algorithm implementation
-    function findRoute(marker) {
-      // Find the shortest path using Dijkstra's algorithm
-      function dijkstra(graph, startNode, endNode) {
-        var distances = {};
-        var previous = {};
-        var queue = [];
-        var visited = {};
+      // Dijkstra's algorithm implementation
+      function findRoute(marker, fromsearch=false) {
+        // Find the shortest path using Dijkstra's algorithm
+        function dijkstra(graph, startNode, endNode) {
+          var distances = {};
+          var previous = {};
+          var queue = [];
+          var visited = {};
 
-        // Initialize distances and previous nodes
-        for (var node in graph) {
-          distances[node] = Infinity;
-          previous[node] = null;
-        }
-
-        distances[startNode] = 0;
-        queue.push({ node: startNode, distance: 0 });
-
-        while (queue.length > 0) {
-          // Sort the queue by distance in ascending order
-          queue.sort(function (a, b) {
-            return a.distance - b.distance;
-          });
-
-          var currentNode = queue.shift().node;
-
-          if (currentNode === endNode) {
-            break;
+          // Initialize distances and previous nodes
+          for (var node in graph) {
+            distances[node] = Infinity;
+            previous[node] = null;
           }
 
-          if (visited[currentNode]) {
-            continue;
-          }
+          distances[startNode] = 0;
+          queue.push({ node: startNode, distance: 0 });
 
-          visited[currentNode] = true;
+          while (queue.length > 0) {
+            // Sort the queue by distance in ascending order
+            queue.sort(function (a, b) {
+              return a.distance - b.distance;
+            });
 
-          for (var neighbor in graph[currentNode]) {
-            var distance = graph[currentNode][neighbor];
-            var totalDistance = distances[currentNode] + distance;
+            var currentNode = queue.shift().node;
 
-            if (totalDistance < distances[neighbor]) {
-              distances[neighbor] = totalDistance;
-              previous[neighbor] = currentNode;
-              queue.push({ node: neighbor, distance: totalDistance });
+            if (currentNode === endNode) {
+              break;
+            }
+
+            if (visited[currentNode]) {
+              continue;
+            }
+
+            visited[currentNode] = true;
+
+            for (var neighbor in graph[currentNode]) {
+              var distance = graph[currentNode][neighbor];
+              var totalDistance = distances[currentNode] + distance;
+
+              if (totalDistance < distances[neighbor]) {
+                distances[neighbor] = totalDistance;
+                previous[neighbor] = currentNode;
+                queue.push({ node: neighbor, distance: totalDistance });
+              }
             }
           }
+
+          // Build the route from end to start
+          var route = [];
+          var current = endNode;
+
+          while (current !== null) {
+            route.unshift(current);
+            current = previous[current];
+          }
+
+          return route;
         }
 
-        // Build the route from end to start
-        var route = [];
-        var current = endNode;
-
-        while (current !== null) {
-          route.unshift(current);
-          current = previous[current];
+        // Clear previous polylines
+        map.eachLayer(function (layer) {
+          if (layer instanceof L.Polyline) {
+            map.removeLayer(layer);
+          }
+        });
+        if(!fromsearch){
+          alert('Getting directions to the marker...');
         }
+        // Get the start and end markers' coordinates
+        var startLatLng = startMarker.getLatLng();
+        var endLatLng = marker.getLatLng();
 
-        return route;
+        // Find the nearest nodes in the graph to the start and end markers
+        var nearestStartNode = findNearestNode(startLatLng);
+        var nearestEndNode = findNearestNode(endLatLng);
+
+        // Perform Dijkstra's algorithm to find the shortest path
+        var shortestPath = dijkstra(graph, nearestStartNode, nearestEndNode);
+
+        // Convert node names to coordinates for creating the polyline
+        var latLngs = shortestPath.map(function (node) {
+          return getNodeCoordinates(node);
+        });
+
+          // Create a polyline between the markers
+  var polyline = L.polyline([], { color: '#00ff0d' });
+
+// Perform Dijkstra's algorithm to find the shortest path
+var shortestPath = dijkstra(graph, nearestStartNode, nearestEndNode);
+
+// Convert node names to coordinates for creating the polyline
+var latLngs = shortestPath.map(function (node) {
+  return getNodeCoordinates(node);
+});
+
+// Add the empty polyline to the map
+polyline.addTo(map);
+
+// Animate the polyline by smoothly updating its coordinates
+var animationInterval = 30; // milliseconds
+var currentIndex = 0;
+
+var endpointIcon = L.icon({
+  iconUrl: '../../mapping/assets/img/grave_img/tao.png', // Replace with the path to your icon/image
+  iconSize: [32, 32], // Adjust the size as needed
+  iconAnchor: [16, 32], // Position the icon's anchor point
+});
+
+var endpointMarker = L.marker(latLngs[0], { icon: endpointIcon }).addTo(map);
+
+function animate() {
+  
+  if (currentIndex < latLngs.length - 1) {
+    var startLatLng = latLngs[currentIndex];
+    var endLatLng = latLngs[currentIndex + 1];
+    var progress = 0;
+
+    function step() {
+      progress += animationInterval / 2000; // Convert milliseconds to seconds
+      if (progress >= 1) {
+        currentIndex++;
+        if (currentIndex < latLngs.length - 1) {
+          startLatLng = latLngs[currentIndex];
+          endLatLng = latLngs[currentIndex + 1];
+          progress = 0;
+        } else {
+          map.removeLayer(endpointMarker);
+          return; // End of animation
+        }
       }
 
-      // Clear previous polylines
-      map.eachLayer(function (layer) {
-        if (layer instanceof L.Polyline) {
-          map.removeLayer(layer);
-        }
-      });
-      alert('Getting directions to the marker...');
-      // Get the start and end markers' coordinates
-      var startLatLng = startMarker.getLatLng();
-      var endLatLng = marker.getLatLng();
+      var interpolatedLatLng = L.latLng(
+        startLatLng.lat + progress * (endLatLng.lat - startLatLng.lat),
+        startLatLng.lng + progress * (endLatLng.lng - startLatLng.lng)
+      );
 
-      // Find the nearest nodes in the graph to the start and end markers
-      var nearestStartNode = findNearestNode(startLatLng);
-      var nearestEndNode = findNearestNode(endLatLng);
+      polyline.addLatLng(interpolatedLatLng);
 
-      // Perform Dijkstra's algorithm to find the shortest path
-      var shortestPath = dijkstra(graph, nearestStartNode, nearestEndNode);
+ // Update the marker's position to the current interpolatedLatLng
+ endpointMarker.setLatLng(interpolatedLatLng);
 
-      // Convert node names to coordinates for creating the polyline
-      var latLngs = shortestPath.map(function (node) {
-        return getNodeCoordinates(node);
-      });
-
-      // Create a polyline between the markers
-      var polyline = L.polyline(latLngs, { color: 'blue' }).addTo(map);
-      map.fitBounds(polyline.getBounds());
+      setTimeout(step, animationInterval);
     }
 
-    // Helper functions
+    step();
+  }
+}
 
-    // Calculate the distance between two LatLng coordinates using the Haversine formula
-    function calculateDistance(latlng1, latlng2) {
-      const R = 6371; // Radius of the Earth in kilometers
-      const lat1 = latlng1.lat;
-      const lon1 = latlng1.lng;
-      const lat2 = latlng2.lat;
-      const lon2 = latlng2.lng;
+// Start the animation
+animate();
 
-      const dLat = toRad(lat2 - lat1);
-      const dLon = toRad(lon2 - lon1);
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c;
-      return distance;
-    }
-
-    // Convert degrees to radians
-    function toRad(degrees) {
-      return degrees * (Math.PI / 180);
-    }
-
-    // Find the nearest node in the graph to the given coordinates
-    function findNearestNode(coordinates) {
-      var nearestNode = null;
-      var nearestDistance = Infinity;
-
-      for (var node in graph) {
-        var nodeCoordinates = getNodeCoordinates(node);
-        var distance = calculateDistance(coordinates, nodeCoordinates);
-
-        if (distance < nearestDistance) {
-          nearestNode = node;
-          nearestDistance = distance;
-        }
+var bounds = L.latLngBounds(latLngs.concat(endpointMarker.getLatLng()));
+map.fitBounds(bounds);
       }
 
-      return nearestNode;
-    }
+      // Helper functions
 
-    // Get the LatLng coordinates of a node
-    function getNodeCoordinates(node) {
+      // Calculate the distance between two LatLng coordinates using the Haversine formula
+      function calculateDistance(latlng1, latlng2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const lat1 = latlng1.lat;
+        const lon1 = latlng1.lng;
+        const lat2 = latlng2.lat;
+        const lon2 = latlng2.lng;
+
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRad(lat1)) *
+          Math.cos(toRad(lat2)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance;
+      }
+
+      // Convert degrees to radians
+      function toRad(degrees) {
+        return degrees * (Math.PI / 180);
+      }
+
+      // Find the nearest node in the graph to the given coordinates
+      function findNearestNode(coordinates) {
+        var nearestNode = null;
+        var nearestDistance = Infinity;
+
+        for (var node in graph) {
+          var nodeCoordinates = getNodeCoordinates(node);
+          var distance = calculateDistance(coordinates, nodeCoordinates);
+
+          if (distance < nearestDistance) {
+            nearestNode = node;
+            nearestDistance = distance;
+          }
+        }
+
+        return nearestNode;
+      }
+
+      // Get the LatLng coordinates of a node
+      function getNodeCoordinates(node) {
       switch (node) {
         case 'startMarker':
           return { lat: 12.63133, lng: 123.93114 };
@@ -2276,6 +2344,17 @@ grave20.on('click', function () {
       }
     }
 
-  </script>
+    </script>
+    <?php 
+      if(isset($_GET['grave'])){
+        ?>
+           <script>
+              window.onload = ()=>{
+                findRoute(graves[<?php echo ($_GET['grave']-1)?>], true)
+              }
+            </script>
+        <?php
+      }
+    ?>
 
 </html>

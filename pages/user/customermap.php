@@ -1853,9 +1853,75 @@ grave20.on('click', function () {
           return getNodeCoordinates(node);
         });
 
-        // Create a polyline between the markers
-        var polyline = L.polyline(latLngs, { color: 'blue' }).addTo(map);
-        map.fitBounds(polyline.getBounds());
+          // Create a polyline between the markers
+  var polyline = L.polyline([], { color: '#00ff0d' });
+
+// Perform Dijkstra's algorithm to find the shortest path
+var shortestPath = dijkstra(graph, nearestStartNode, nearestEndNode);
+
+// Convert node names to coordinates for creating the polyline
+var latLngs = shortestPath.map(function (node) {
+  return getNodeCoordinates(node);
+});
+
+// Add the empty polyline to the map
+polyline.addTo(map);
+
+// Animate the polyline by smoothly updating its coordinates
+var animationInterval = 30; // milliseconds
+var currentIndex = 0;
+
+var endpointIcon = L.icon({
+  iconUrl: '../../mapping/assets/img/grave_img/tao.png', // Replace with the path to your icon/image
+  iconSize: [32, 32], // Adjust the size as needed
+  iconAnchor: [16, 32], // Position the icon's anchor point
+});
+
+var endpointMarker = L.marker(latLngs[0], { icon: endpointIcon }).addTo(map);
+
+function animate() {
+  
+  if (currentIndex < latLngs.length - 1) {
+    var startLatLng = latLngs[currentIndex];
+    var endLatLng = latLngs[currentIndex + 1];
+    var progress = 0;
+
+    function step() {
+      progress += animationInterval / 2000; // Convert milliseconds to seconds
+      if (progress >= 1) {
+        currentIndex++;
+        if (currentIndex < latLngs.length - 1) {
+          startLatLng = latLngs[currentIndex];
+          endLatLng = latLngs[currentIndex + 1];
+          progress = 0;
+        } else {
+          map.removeLayer(endpointMarker);
+          return; // End of animation
+        }
+      }
+
+      var interpolatedLatLng = L.latLng(
+        startLatLng.lat + progress * (endLatLng.lat - startLatLng.lat),
+        startLatLng.lng + progress * (endLatLng.lng - startLatLng.lng)
+      );
+
+      polyline.addLatLng(interpolatedLatLng);
+
+ // Update the marker's position to the current interpolatedLatLng
+ endpointMarker.setLatLng(interpolatedLatLng);
+
+      setTimeout(step, animationInterval);
+    }
+
+    step();
+  }
+}
+
+// Start the animation
+animate();
+
+var bounds = L.latLngBounds(latLngs.concat(endpointMarker.getLatLng()));
+map.fitBounds(bounds);
       }
 
       // Helper functions
