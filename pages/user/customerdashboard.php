@@ -504,6 +504,10 @@ document.getElementById("year").innerHTML = new Date().getFullYear();
 $(document).ready( function () {
 
 $('#dataTable').wrap('<div id="hide" style="display:none"/>');
+// Get the element by its ID
+var welcomeElement = document.getElementById("welcome");
+// Create an image element
+welcomeElement.style.backgroundPosition = "center top -550px"; // Adjust the top margin size as needed
 
 var table = $('#dataTable').DataTable();
 
@@ -517,11 +521,35 @@ $('#filter-name').on('click', function () {
 console.log('Searching for name:', $('#search-name').val());
 
 table.column(1).search($('#search-name').val()).draw();
+ // Fade in the element
+ $('#hide').css('opacity', 0).css('display', 'block');
+        $('#hide').animate({ opacity: 1 }, 1000); // You can adjust the duration (e.g., 300 milliseconds) to control the speed of the fade-in effect.
 
-$('#hide').css( 'display', 'block' );
-// Show the title when the button is pressed
-$('#tableTitle').removeClass('hidden-title');
+// Show the title when the button is pressed with a fade effect
+$('#tableTitle').removeClass('hidden-title').hide().fadeIn(500); // You can adjust the duration as needed
 
+// Wrap the annsection in a hidden #hide element
+$('#annsection').wrap('<div id="hide" style="display:none"/>');
+
+// Get the element by its ID
+var welcomeElement = document.getElementById("welcome");
+
+// Change the background image
+welcomeElement.style.backgroundImage = "none";  
+// Get all elements within the "main-nav" class
+var mainNavElements = document.querySelectorAll(".main-nav *");
+
+// Set the text color to black for each element
+mainNavElements.forEach(function(element) {
+  element.style.color = "black";
+});
+// Get the currently active link (you may need to adjust the logic for determining the active link)
+var activeLink = document.querySelector(".main-nav a.active");
+
+// Set the text color of the active link to orange
+if (activeLink) {
+  activeLink.style.color = "#f55858";
+}
 });
 
 } );
