@@ -499,6 +499,7 @@ document.getElementById("year").innerHTML = new Date().getFullYear();
 
 
 
+
 <script>
 
 $(document).ready( function () {
@@ -507,7 +508,7 @@ $('#dataTable').wrap('<div id="hide" style="display:none"/>');
 // Get the element by its ID
 var welcomeElement = document.getElementById("welcome");
 // Create an image element
-welcomeElement.style.backgroundPosition = "center top -550px"; // Adjust the top margin size as needed
+welcomeElement.style.backgroundPosition = "center top -500px"; // Adjust the top margin size as needed
 
 var table = $('#dataTable').DataTable();
 
@@ -537,12 +538,22 @@ var welcomeElement = document.getElementById("welcome");
 // Change the background image
 welcomeElement.style.backgroundImage = "none";  
 // Get all elements within the "main-nav" class
-var mainNavElements = document.querySelectorAll(".main-nav *");
+// Select all text elements within the <nav>
+var navElements = document.querySelectorAll('nav.main-nav *');
 
-// Set the text color to black for each element
-mainNavElements.forEach(function(element) {
-  element.style.color = "black";
-});
+// Loop through the elements and set their text color to black
+for (var i = 0; i < navElements.length; i++) {
+  navElements[i].style.color = 'black';
+}
+
+// Select the text elements within the <div class="input-group-append">
+var inputGroupElements = document.querySelectorAll('nav.main-nav .input-group-append *');
+
+// Loop through the elements and set their text color to its original color (e.g., white)
+for (var i = 0; i < inputGroupElements.length; i++) {
+  inputGroupElements[i].style.color = 'white'; // You can set it to the original color of your choice
+}
+
 // Get the currently active link (you may need to adjust the logic for determining the active link)
 var activeLink = document.querySelector(".main-nav a.active");
 
@@ -619,7 +630,6 @@ $('#search-name').on('keyup', validateNextButton);
 document.getElementById("year").innerHTML = new Date().getFullYear();
 
 </script>
-
 
 
 <script src="../../assets/js/popper.js"></script>
