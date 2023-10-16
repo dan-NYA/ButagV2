@@ -343,9 +343,10 @@ while($row = mysqli_fetch_assoc($result))
 
     </table>
     <br><br><br>
-    <div style="text-align: center;">
+    <div class="annsection" id="annsection" >
+    <div style="text-align: center; margin-top:-150px; margin-bottom:150px;">
   <div style="display: inline-block; vertical-align: middle; width: 100%; border-top: 2px solid #333;"></div>
-  <h1 style="font-size: 100px; font-weight: bold; display: inline-block; margin: 0 10px; vertical-align: middle;">ANNOUNCEMENTS</h1>
+  <h1 style="font-size: 100px; font-weight: bold; display: inline-block; margin: 0 10px; vertical-align: middle; color:#223892; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);-webkit-text-stroke: 1px #223892; text-stroke: 1px #223892;">ANNOUNCEMENTS</h1>
   <div style="display: inline-block; vertical-align: middle; width: 60%; border-top: 2px solid #333;"></div>
 </div>
 
@@ -467,7 +468,7 @@ while($data = mysqli_fetch_assoc($res))
  ?>
 
 
-
+</div>
                 </div>
 
                
